@@ -11,12 +11,12 @@ public class BancoBankExtension extends JavaPlugin {
     @Override
     public void onEnable() {
         container = new BankContainer();
-        Banco.get().getStorageManager().registerStorage(container);
+        Banco.get().getStorageRegistry().registerStorage(container);
     }
 
     @Override
     public void onDisable() {
-        Banco.get().getStorageManager().unregisterStorage(container);
+        Banco.get().getStorageRegistry().unregisterStorage(container);
     }
 
 }

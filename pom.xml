@@ -6,7 +6,7 @@
 
     <groupId>ovh.mythmc</groupId>
     <artifactId>banco-bank-extension</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
@@ -31,8 +31,13 @@
         </repository>
 
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <id>myth-mc-snapshots</id>
+            <url>https://repo.mythmc.ovh/repositories/snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io/</url>
         </repository>
     </repositories>
 
@@ -45,9 +50,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.myth-MC.banco</groupId>
-            <artifactId>banco-api-bukkit</artifactId>
-            <version>v0.6.0</version>
+            <groupId>ovh.mythmc</groupId>
+            <artifactId>banco-api</artifactId>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -56,7 +61,7 @@
             <artifactId>bank</artifactId>
             <version>4.8.0-RELEASE</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/.idea/bank-plugin-lite-latest-all.jar</systemPath>
+            <systemPath>${project.basedir}/.local/bank-plugin-lite-latest-all.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -64,7 +69,7 @@
             <artifactId>core</artifactId>
             <version>0.6.4</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/.idea/core-latest.jar</systemPath>
+            <systemPath>${project.basedir}/.local/core-latest.jar</systemPath>
         </dependency>
     </dependencies>
 
