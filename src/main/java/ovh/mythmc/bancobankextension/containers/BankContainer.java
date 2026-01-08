@@ -2,11 +2,15 @@ package ovh.mythmc.bancobankextension.containers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.bukkit.inventory.ItemStack;
 
+import me.dablakbandit.bank.player.handler.BankItemsHandler;
 import me.dablakbandit.bank.player.info.BankItemsInfo;
 import me.dablakbandit.bank.player.info.item.BankItem;
 import me.dablakbandit.core.players.CorePlayerManager;
@@ -17,18 +21,13 @@ public final class BankContainer extends BancoContainer {
 
     @Override
     protected ItemStack addItem(UUID uuid, ItemStack itemStack) {
-        CorePlayers player = CorePlayerManager.getInstance().getPlayer(uuid);
+        final CorePlayers player = CorePlayerManager.getInstance().getPlayer(uuid);
         if (player == null) return itemStack;
 
-        BankItemsInfo bankItemsInfo = player.getInfo(BankItemsInfo.class);
-        BankItem bankItem = new BankItem(itemStack, itemStack.getAmount());
-        var bankItems = bankItemsInfo.getTabBankItems(bankItemsInfo.getMaxTabNotEmpty());
-        boolean isAdded = bankItems.add(bankItem);
+        final BankItemsInfo bankItemsInfo = player.getInfo(BankItemsInfo.class);
+        final BankItemsHandler bankItemsHandler = bankItemsInfo.getBankItemsHandler();
 
-        if (isAdded)
-            return null;
-
-        return itemStack;
+        return bankItemsHandler.addBankItem(player.getPlayer(), itemStack, false);
     }
 
     @Override
@@ -44,11 +43,13 @@ public final class BankContainer extends BancoContainer {
             return List.of();
         int maxTabs = bankItemsInfo.getMaxTabNotEmpty();
         for (int i = 0; i <= maxTabs; i++) {
-            bankItemsInfo.getTabBankItems(i).forEach(bankItem -> {
-                ItemStack itemStack = bankItem.getItemStack();
-                itemStack.setAmount(bankItem.getAmount());
-                items.add(itemStack);
-            });
+            bankItemsInfo.getTabBankItemsMap(i).values().stream()
+                .filter(Objects::nonNull)
+                .forEach(bankItem -> {
+                    ItemStack itemStack = bankItem.getItemStack();
+                    itemStack.setAmount(bankItem.getAmount());
+                    items.add(itemStack);
+                });
         }
 
         return items;
@@ -56,18 +57,22 @@ public final class BankContainer extends BancoContainer {
 
     @Override
     protected ItemStack removeItem(UUID uuid, ItemStack itemStack) {
-        CorePlayers player = CorePlayerManager.getInstance().getPlayer(uuid);
+        final CorePlayers player = CorePlayerManager.getInstance().getPlayer(uuid);
         if (player == null) return itemStack;
 
-        BankItemsInfo bankItemsInfo = player.getInfo(BankItemsInfo.class);
+        final BankItemsInfo bankItemsInfo = player.getInfo(BankItemsInfo.class);
 
         boolean removed = false;
         for (int i = 0; i <= bankItemsInfo.getTotalTabCount(); i++) {
-            for (BankItem bankItem : List.copyOf(bankItemsInfo.getTabBankItems(i))) {
+            final Map<Integer, BankItem> tabBankItemMap = bankItemsInfo.getTabBankItemsMap(i);
+            Iterator<BankItem> iterator = tabBankItemMap.values().iterator();
+            while (iterator.hasNext()) {
+                final BankItem bankItem = iterator.next();
+
                 if (removed) break;
 
                 if (bankItem.getItemStack().equals(itemStack)) {
-                    bankItemsInfo.getTabBankItems(i).remove(bankItem);
+                    iterator.remove();
                     removed = true;
                 }
             }

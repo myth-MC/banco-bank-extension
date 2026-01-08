@@ -15,8 +15,8 @@
 This plugins hooks banco with Dablakbandit's [Bank](https://www.spigotmc.org/resources/bank-1-21-sale-20-off.3556/?__cf_chl_tk=tlKHo4UrB885gZTKIda51AVjsuR6LS7P78xAdCSbzPU-1724265055-0.0.1.1-5929) plugin.
 
 Supported features:
-- Items stored in Bank's item storage are recognized as valid banco items
+- Players are able to store currency using the Bank's item storage system
 
 **Tested on**
-- banco 0.6.1
-- Bank Lite 4.8.0
+- banco 1.2.2
+- Bank Lite 5.0.4

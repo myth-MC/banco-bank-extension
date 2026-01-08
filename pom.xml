@@ -31,8 +31,8 @@
         </repository>
 
         <repository>
-            <id>myth-mc-snapshots</id>
-            <url>https://repo.mythmc.ovh/repositories/snapshots/</url>
+            <id>myth-mc-releases</id>
+            <url>https://repo.mythmc.ovh/releases/</url>
         </repository>
 
         <repository>
@@ -52,14 +52,14 @@
         <dependency>
             <groupId>ovh.mythmc</groupId>
             <artifactId>banco-api</artifactId>
-            <version>1.0.0</version>
+            <version>1.2.1</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>me.dablakbandit</groupId>
             <artifactId>bank</artifactId>
-            <version>4.8.0-RELEASE</version>
+            <version>5.0.4-RELEASE</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/.local/bank-plugin-lite-latest-all.jar</systemPath>
         </dependency>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>me.dablakbandit</groupId>
             <artifactId>core</artifactId>
-            <version>0.6.4</version>
+            <version>0.6.7</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/.local/core-latest.jar</systemPath>
         </dependency>
